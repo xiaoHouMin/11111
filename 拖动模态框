@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .bg {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgb(73, 73, 73);
+            opacity: .2;
+            z-index: 100;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .header a {
+            font-size: 24px;
+            color: rgb(41, 41, 41);
+        }
+
+        .login {
+            display: none;
+            position: fixed;
+            width: 600px;
+            height: 250px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(219, 219, 219);
+            z-index: 101;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+        }
+
+        .title {
+            padding-top: 15px;
+            text-align: center;
+            font-size: 18px;
+            color: rgb(41, 41, 41);
+        }
+
+        .title:hover {
+            cursor: move;
+        }
+
+        .login span {
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(219, 219, 219);
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            text-align: center;
+            line-height: 40px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+        }
+
+        .login span a {
+            color: rgb(41, 41, 41);
+        }
+
+        .put {
+            width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        input {
+            width: 400px;
+            height: 30px;
+            outline: none;
+            border: 1px solid rgb(179, 179, 179);
+            margin-top: 30px;
+        }
+
+        .yonghu label {
+            display: inline-block;
+            width: 90px;
+            text-align: right;
+        }
+
+        .mima label {
+            display: inline-block;
+            width: 90px;
+            text-align: right;
+        }
+
+        .denglu {
+            width: 200px;
+            height: 30px;
+            border: 1px solid rgb(219, 219, 219);
+            margin: 30px auto;
+            line-height: 30px;
+        }
+
+        .denglu a {
+            color: rgb(41, 41, 41);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header"><a href="javascript:;" class="link">点击，弹出登录框</a></div>
+    <div class="login">
+        <div class="title">登录会员</div>
+        <span><a href="javascript:;" class="close">关闭</a></span>
+        <div class="put">
+            <div class="yonghu">
+                <label>用户名：</label>
+                <input type="text" placeholder="请输入用户名">
+            </div>
+            <div class="mima">
+                <label>登录密码：</label>
+                <input type="password" placeholder="请输入登录密码">
+            </div>
+            <div class="denglu">
+                <a href="javascript:;">登录会员</a>
+            </div>
+        </div>
+    </div>
+    <div class="bg"></div>
+</body>
+<script>
+    var login = document.querySelector('.login');
+    var mask = document.querySelector('.bg');
+    var link = document.querySelector('.link');
+    var close = document.querySelector('.close');
+    var title = document.querySelector('.title');
+    // 点击弹出这个链接 link 让mask和login显示
+    link.addEventListener('click', function () {
+        login.style.display = 'block';
+        mask.style.display = 'block';
+    })
+    // 点击关闭按钮 让mask和login隐藏
+    close.addEventListener('click', function () {
+        login.style.display = 'none';
+        mask.style.display = 'none';
+    })
+    // 当鼠标按下时（mousedown） 获得鼠标在盒子内的的坐标 e.pageX e.pageY
+    title.addEventListener('mousedown', function (e) {
+        var x = e.pageX - login.offsetLeft;
+        var y = e.pageY - login.offsetTop;
+        // 当鼠标移动时（mousemove） 用鼠标在页面中的坐标减去鼠标在盒子内的坐标  得到的值作为盒子的 left 和 top 值
+        document.addEventListener('mousemove', move);
+
+        function move(e) {
+            login.style.left = e.pageX - x + 'px';
+            login.style.top = e.pageY - y + 'px';
+        }
+        // 当鼠标弹起时（mouseup） 事件解除
+        document.addEventListener('mouseup', function () {
+            document.removeEventListener('mousemove', move);
+        })
+    })
+
+</script>
+
+</html>
